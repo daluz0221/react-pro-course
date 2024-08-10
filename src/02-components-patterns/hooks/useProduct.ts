@@ -15,8 +15,6 @@ export const useProduct = ( {onChange, product, value = 0, initialValues}: usePr
     const [counter, setCounter] = useState<number>( initialValues?.count || value );
     const isMounted = useRef(false);
     
-    console.log(initialValues?.count);
-    
     const isContrlled = useRef( !!onChange )
 
 
@@ -42,6 +40,10 @@ export const useProduct = ( {onChange, product, value = 0, initialValues}: usePr
 
     }
 
+    const reset = () => {
+      setCounter( initialValues?.count || value )
+    }
+
     useEffect(() => {
       if (!isMounted.current) return;
       setCounter( value );
@@ -55,6 +57,10 @@ export const useProduct = ( {onChange, product, value = 0, initialValues}: usePr
 
     return {
         counter,
-        increaseBy
+        maxCount: initialValues?.maxCount,
+        isMaxCountReach: !!initialValues?.maxCount && initialValues.maxCount == counter,
+        
+        increaseBy,
+        reset,
     }
 }
